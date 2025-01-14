@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/12/18 15:49:14 by jbremser         ###   ########.fr        #
+#    Updated: 2025/01/14 17:36:16 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ FILES		=	main.c \
 				raycasting.c \
 				rendering.c \
 				coloring.c \
-				movement.c
+				movement.c \
+				minimap.c
 
 SRCDIR		=	srcs
 OBJDIR		=	objs

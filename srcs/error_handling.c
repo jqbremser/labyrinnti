@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/14 15:41:55 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:41:01 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ int	handle_error(int errno, t_map_data *game)
 		map_free_error(errno, game);
 	if (errno == EXIT_NO_PLAYER)
 		map_free_error(errno, game);
-	// if (errno == EXIT_MULT_PLAYERS)
-	// 	map_free_error(errno, game);
 	if (errno == 0)
 		return (0);
 	else

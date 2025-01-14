@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/14 15:38:30 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:42:05 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,22 +111,10 @@ static int	map_rows(char *arg)
 	if (fd == -1)
         return (-1);
 	line = get_next_line(fd);
-	// printf("\nline here: %s\n fd: %d\n", line, fd);
 	while (line)
 	{
-		// printf("\ngnl line: %s\n fd: %d\n", line, fd);
-
 		free(line);
 		line = get_next_line(fd);
-		// if (line)
-		// {
-		// 	// if (line[0] == '\n')
-        //     // {
-        //     //     write(2, "Error: Extra line at bottom\n", 29);
-		// 	// 	// free(line);
-        //     //     continue;        
-        //     // }
-		// }
 		i++;
 	}
 	free (line);

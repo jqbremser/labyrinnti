@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2025/01/13 17:22:39 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:36:50 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void game_loop(void *param)
     }
     raycasting(game);
     mlx_image_to_window(game->mlx, game->image, 0, 0);
+    // mlx_image_to_window(game->mlx, game->)
 }
 
 void start_game(t_map_data *game)
@@ -43,6 +44,7 @@ void start_game(t_map_data *game)
     mlx_loop_hook(game->mlx, &player_loop, game);
 	printf("\nafter mlx_loop_hook\n");
     mlx_key_hook(game->mlx, &mlx_key, game);
+    draw_minimap(game->mlx, game);
 	printf("\nafter mlx_key_hook\n");
     if (game->mlx == NULL)
        	printf("\nmlx is NULL\n");

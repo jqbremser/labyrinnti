@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/14 15:08:30 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:35:56 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_vector
 	double	y;
 }	t_vector;
 
+
 typedef struct s_player
 {
 	double	x;
@@ -92,6 +93,7 @@ typedef struct s_texture
 	uint32_t		ceiling;
 }	t_texture;
 
+
 typedef struct s_camera
 {
 	double	fov_radians;
@@ -109,6 +111,23 @@ typedef struct s_ray
 	uint32_t	x;
 }	t_ray;
 
+typedef struct s_minimap
+{
+	int	x;
+	int	y;
+	int	px_x;
+	int	px_y;
+	int	i;
+	int	k;
+
+	// // t_map_data	game;
+	// char		*wall_asset;
+	// char		*floor_asset;
+	// char		*player_asset;
+	// char 		*sightline;
+	// t_player	*player;
+}	t_minimap;
+
 typedef struct s_map_data
 {
 	char    **info;
@@ -125,12 +144,19 @@ typedef struct s_map_data
 	char	**copy;
 	mlx_t		*mlx;
 	mlx_image_t	*image;
+	mlx_image_t	*minimap;
 	t_player	player;
 	t_player	temp_player;
 	t_keys		keys_pressed;
 	t_texture	textures;
 	t_camera	camera;
+	int			mm;
+	int			x_len;
+	int			y_len;
+	// t_minimap	minimap;
 }   t_map_data;
+
+
 
 /* ************************************************************************** */
 /*									error_handling							  */
@@ -189,5 +215,8 @@ void		game_loop(void *param);
 void		player_loop(void *param);
 void		handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game);
 void		handle_movement_released(mlx_key_data_t keydata, t_map_data *game);
+
+void		draw_minimap(mlx_t *mlx, t_map_data *game);
+
 
 #endif
