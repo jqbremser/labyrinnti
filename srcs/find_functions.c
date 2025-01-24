@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/24 16:45:35 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/24 17:23:10 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int			find_player(t_map_data	*game, int x, int y, int P_found);
 static int	find_asset(t_map_data	*game);
 static int	find_no_map(t_map_data *game);
 static void	find_ones(t_map_data *game, int x, int y, int a);
+static int title_check(t_map_data *game, char *line);
+
 
 /* Finds and stores the assets related to walls, floor, and ceiling in
    the `game` structure. Calls `handle_error` if no valid map is found. */
@@ -74,22 +76,101 @@ static int find_asset(t_map_data	*game)
 	x = 0;
 	while (game->info[y][x])
 	{
-		title_check(game, game->info[y][x]);
+		printf("before title check\n");
+		if (!title_check(game, game->info[y]))
+			y++;
 		
 	}
+	return (0);
 }
 
 static int title_check(t_map_data *game, char *line)
 {
-	if (!ft_strcmp(line, "NO "))
+	if (!ft_strncmp(line, "NO ", 3))
 	{
-		printf("here\n");
+		printf("NO:here\n");
 		if (!game->n_wall_asset)
+		{
+			printf("SO:1\n");
 			game->n_wall_asset = ft_strdup(line + 3);
+		}
 		else
+		{
+			printf("else\n");
 			handle_error(EXIT_NO_ASSETS, game);	
+		}
 	}
-	
+	if (!ft_strncmp(line, "SO ", 3))
+	{
+		printf("SO:here\n");
+		if (!game->s_wall_asset)
+		{
+			printf("SO:1\n");
+			game->s_wall_asset = ft_strdup(line + 3);
+		}
+		else
+		{
+			printf("else\n");
+			handle_error(EXIT_NO_ASSETS, game);	
+		}
+	}
+	if (!ft_strncmp(line, "WE ", 3))
+	{
+		printf("WE:here\n");
+		if (!game->w_wall_asset)
+		{
+			printf("WE:1\n");
+			game->w_wall_asset = ft_strdup(line + 3);
+		}
+		else
+		{
+			printf("else\n");
+			handle_error(EXIT_NO_ASSETS, game);	
+		}
+	}
+	if (!ft_strncmp(line, "EA ", 3))
+	{
+		printf("EA:here\n");
+		if (!game->e_wall_asset)
+		{
+			printf("EA:1\n");
+			game->e_wall_asset = ft_strdup(line + 3);
+		}
+		else
+		{
+			printf("else\n");
+			handle_error(EXIT_NO_ASSETS, game);	
+		}
+	}
+	if (!ft_strncmp(line, "F ", 2))
+	{
+		printf("F:here\n");
+		if (!game->floor_color)
+		{
+			printf("F:1\n");
+			game->floor_color= ft_strdup(line + 2);
+		}
+		else
+		{
+			printf("else\n");
+			handle_error(EXIT_NO_ASSETS, game);	
+		}
+	}
+	if (!ft_strncmp(line, "C ", 2))
+	{
+		printf("C:here\n");
+		if (!game->ceiling_color)
+		{
+			printf("C:1\n");
+			game->ceiling_color= ft_strdup(line + 3);
+		}
+		else
+		{
+			printf("else\n");
+			handle_error(EXIT_NO_ASSETS, game);	
+		}
+	}
+	return (0);
 
 		
 }
