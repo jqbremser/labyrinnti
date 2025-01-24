@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:47:08 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 18:27:22 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:33:08 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	find_extras(char **map)
 	{
 		while (map[y][x])
 		{
-			if (!(ft_strchr("01NSWE \n", map[y][x]))) // && ft_isalpha(map[y][x]))
+			if (!(ft_strchr("01NSWE \n", map[y][x])))
 				return (1);
 			x++;
 		}
@@ -73,13 +73,9 @@ int	find_extras(char **map)
 
 int	check_color(char *str)
 {
-	int		len;
 	int		i;
 	char	**temp;
 
-	len = ft_strlen(str);
-	if (len < 5)
-		return (1);
 	i = 0;
 	while (str[i])
 	{
@@ -104,18 +100,6 @@ int	check_color(char *str)
 	return (check_temp(temp, i));
 }
 
-// bool	check_empty_string(char *temp)
-// {
-// 	while (temp)
-// 	{
-// 		if (ft_strcmp(temp, " ") || ft_strcmp(temp, "\t"))
-// 			temp++;
-// 		else
-// 			return (1);
-// 	}
-// 	return(0);
-// }
-
 int	check_temp(char	**temp, int i)
 {
 	int	x;
@@ -125,28 +109,12 @@ int	check_temp(char	**temp, int i)
 	while (x < i)
 	{
 		temp_n = -1;
-		// printf("temp[x]:%s\n", temp[x]);
-		// if (ft_isprint(temp[x]))
 		temp_n = ft_atoi(temp[x]);
-		// printf("temp_n:%d\n", temp_n);
-		// if (check_empty_string(temp[x]))
-		// {
-		// 	printf("color value is empty: %s\n", temp[x]);
-		// 	free_array(temp);
-		// 	return (1);
-		// }
-
 		if (temp_n < 0 || temp_n > 255)
 		{
 			free_array(temp);
 			return (1);
 		}
-		// if (!ft_atoi(temp[x]))
-		// {
-		// 	printf("2:RBG values must be between 0-255: %s\n", temp[x]);
-		// 	free_array(temp);
-		// 	return (1);
-		// }
 		else
 			x++;
 	}

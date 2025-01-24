@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:55:16 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:45:35 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		find_map(t_map_data	*game);
 int			find_player(t_map_data	*game, int x, int y, int P_found);
-static char	*find_asset(t_map_data	*game, char	*arg);
+static int	find_asset(t_map_data	*game);
 static int	find_no_map(t_map_data *game);
 static void	find_ones(t_map_data *game, int x, int y, int a);
 
@@ -24,12 +24,8 @@ void	find_map(t_map_data	*game)
 {
 	if (find_no_map(game))
 		handle_error(EXIT_NO_MAP, game);
-	game->n_wall_asset = find_asset(game, "NO ");
-	game->s_wall_asset = find_asset(game, "SO ");
-	game->w_wall_asset = find_asset(game, "WE ");
-	game->e_wall_asset = find_asset(game, "EA ");
-	game->floor_color = find_asset(game, "F ");
-	game->ceiling_color = find_asset(game, "C ");
+	if (find_asset(game))
+		handle_error(EXIT_NO_ASSETS, game);
 	if (game->n_wall_asset == NULL || game->s_wall_asset == NULL
 		|| game->w_wall_asset == NULL || game->e_wall_asset == NULL
 		|| game->floor_color == NULL || game->ceiling_color == NULL)
@@ -39,6 +35,7 @@ void	find_map(t_map_data	*game)
 	find_ones(game, game->temp_x, game->temp_y, game->temp_a);
 	if (find_extras(game->map))
 		handle_error(EXIT_EXTRA_ABC, game);
+
 }
 
 /* Searches the map for a player character ('N', 'S', 'W', 'E'), sets the
@@ -68,29 +65,137 @@ int	find_player(t_map_data	*game, int x, int y, int P_found)
 	return (P_found);
 }
 
-/* Searches for an asset in the `game` structure by matching `arg` with
-   the starting part of each entry in `game->info`. Returns the asset as
-   a new string, or NULL if not found. */
-static char	*find_asset(t_map_data	*game, char	*arg)
+static int find_asset(t_map_data	*game)
 {
-	int	y;
-	int	x;
+	int y;
+	int x;
 
 	y = 0;
 	x = 0;
-	while (game->info[y])
+	while (game->info[y][x])
 	{
-		if (!ft_strncmp(&game->info[y][x], arg, ft_strlen(arg)))
-		{
-			x = ft_strlen(arg) - 1;
-			while (!ft_strncmp(&game->info[y][x], " ", 1))
-				x++;
-			return (ft_strdup(&game->info[y][x]));
-		}
-		y++;
+		title_check(game, game->info[y][x]);
+		
 	}
-	return (NULL);
 }
+
+static int title_check(t_map_data *game, char *line)
+{
+	if (!ft_strcmp(line, "NO "))
+	{
+		printf("here\n");
+		if (!game->n_wall_asset)
+			game->n_wall_asset = ft_strdup(line + 3);
+		else
+			handle_error(EXIT_NO_ASSETS, game);	
+	}
+	
+
+		
+}
+
+/* Searches for an asset in the `game` structure by matching `arg` with
+   the starting part of each entry in `game->info`. Returns the asset as
+   a new string, or NULL if not found. */
+// static int find_asset(t_map_data	*game)
+// {
+// 	int	y;
+// 	int	x;
+
+// 	y = 0;
+// 	x = 0;
+// 	while (game->info[y])
+// 	{
+// 		while (game->info[y][x])
+// 		{
+// 			if (!ft_strncmp(&game->info[y][x], "NO ", 3))
+// 			{
+// 				x = 3;
+// 				// while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 				// 	x++;
+// 				game->n_wall_asset = (ft_strdup(&game->info[y][x]));
+// 				printf("n_wall:%s\n", game->n_wall_asset);
+// 				y++;
+// 			}
+// 			else if (!ft_strncmp(&game->info[y][x], "SO ", 3))
+// 			{
+// 				x = 2;
+// 				while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 					x++;
+// 				game->s_wall_asset = (ft_strdup(&game->info[y][x]));
+// 				y++
+// 			}
+// 			else if (!ft_strncmp(&game->info[y][x], "WE ", 3))
+// 			{
+// 				x = 2;
+// 				while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 					x++;
+// 				game->w_wall_asset = (ft_strdup(&game->info[y][x]));
+// 				y++;
+// 			}
+// 			else if (!ft_strncmp(&game->info[y][x], "EA ", 3))
+// 			{
+// 				x = 2;
+// 				while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 					x++;
+// 				game->e_wall_asset = (ft_strdup(&game->info[y][x]));
+// 				y++;
+// 			}
+// 			else if (!ft_strncmp(&game->info[y][x], "F ", 2))
+// 			{
+// 				x = 1;
+// 				while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 					x++;
+// 				game->floor_color = (ft_strdup(&game->info[y][x]));
+// 				y++;
+// 			}
+// 			else if (!ft_strncmp(&game->info[y][x], "C ", 2))
+// 			{
+// 				x = 1;
+// 				while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 					x++;
+// 				game->ceiling_color = (ft_strdup(&game->info[y][x]));
+// 				y++;
+// 			}
+// 			if (game->info[y][x] == ' ' || game->info[y][x] == '\t' || game->info[y][x] == '\n'))
+// 				x++;
+// 			else
+// 			{
+// 				printf("here\n");
+// 				return(1);
+// 			}
+// 		}
+// 		y++;
+// 	}
+// 	return (0);
+// }
+
+
+// 		/*  ft_strncmp all of these:
+		
+// 		 	game->n_wall_asset = find_asset(game, "NO ");
+// 	game->s_wall_asset = find_asset(game, "SO ");
+// 	game->w_wall_asset = find_asset(game, "WE ");
+// 	game->e_wall_asset = find_asset(game, "EA ");
+// 	game->floor_color = find_asset(game, "F ");
+// 	game->ceiling_color = find_asset(game, "C ");*/
+
+
+
+// 		if (!ft_strncmp(&game->info[y][x], "NO ", 3)
+// 		{
+// 			x = 2;
+// 			while (!ft_strncmp(&game->info[y][x], " ", 1))
+// 				x++;
+// 			game->n_wall_asset = (ft_strdup(&game->info[y][x]));
+// 		}
+// 			// || !ft_strncmp(&game->info[y][x], "SO ", 3)
+// 			// || !ft_strncmp(&game->info[y][x], "EA ", 3)
+// 			// || !ft_strncmp(&game->info[y][x], "WE ", 3))
+// 		y++;
+// 	}
+// 	return (NULL);
+// }
 
 /* Checks if there is a valid map in the `game` structure by scanning
    for the first occurrence of a '1' in `game->info`. Returns 1 if no

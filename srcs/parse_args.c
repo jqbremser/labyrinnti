@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 17:25:32 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:05:11 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,21 @@ int	parse_args(char **argv, t_map_data	*game)
 	else
 		return (1);
 }
+// void	print_info(t_map_data *game)
+// {
+// 	printf("game->info map:\n");
+// 	print_map(game->info);
+// 	printf("game->map map:\n");
+// 	ft_printf("n_wall: %s\n", game->n_wall_asset);
+// 	ft_printf("s_wall: %s\n", game->s_wall_asset);
+// 	ft_printf("w_wall: %s\n", game->w_wall_asset);
+// 	ft_printf("e_wall: %s\n", game->e_wall_asset);
+// 	ft_printf("floor: %s\n", game->floor_color);
+// 	ft_printf("ceiling: %s\n", game->ceiling_color);
+// 	ft_printf("rows: %d\n", game->rows);
+// 	ft_printf("map rows: %d\n", game->map_rows);
+// 	print_map(game->map);
+// }
 
 /* When complete, there will be an game->map char** that contains the entire map
 	All data from map.cub came in as part of game->info, and then this is
@@ -53,6 +68,7 @@ static int	map_parse(char **argv, t_map_data	*game)
 	}
 	map_to_str(game, argv[1]);
 	find_map(game);
+	// print_info(game);
 	return (0);
 }
 

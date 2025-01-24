@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:17:14 by hlee-sun          #+#    #+#             */
-/*   Updated: 2025/01/21 15:55:02 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:26:28 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	set_heading(t_map_data	*game, int y, int x)
 /* Trims the last character (newline) from a string. */
 static int	trim_lb_and_check(char *str)
 {
-	int fd;
+	int	fd;
 
 	str[ft_strlen(str) - 1] = '\0';
 	fd = open(str, O_RDONLY);
