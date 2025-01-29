@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 17:25:32 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:30:16 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,14 @@ static int	map_parse(char **argv, t_map_data	*game)
 		return (1);
 	}
 	map_to_str(game, argv[1]);
+	// int x = 0;
+	// while (game->info[x])
+	// 	printf("%s", game->info[x++]);
+	// check_info(game, game->info);
 	find_map(game);
 	return (0);
 }
+
 
 /* Turns the map.cub file into a char** and saves it in game->info */
 static void	map_to_str(t_map_data *game, char *argv)

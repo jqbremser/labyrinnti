@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:55:16 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:05:17 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,81 @@ static char	*find_asset(t_map_data	*game, char	*arg);
 static int	find_no_map(t_map_data *game);
 static void	find_ones(t_map_data *game, int x, int y, int a);
 
+
+
+
+
+
+static bool check_map(char **info, int y)
+{	
+	int x;
+	int p_found;
+
+	p_found = 0;
+	x = 0;
+	while (info[y][x] != '\0')
+    {
+        // Valid map characters: '1', '0', ' ' (space)
+        if (info[y][x] == '1' || info[y][x] == '0' || info[y][x] == ' ')
+		{
+            x++;
+        }
+        // Valid player characters: N, S, W, E
+        else if (ft_strchr("NSWE", info[y][x]))
+		{
+            p_found++;
+            if (p_found > 1) {
+                // More than one player character found in the map
+                printf("Error: Found too many players in the map at line %d\n", y);
+                return false;
+            }
+            x++;
+        }
+		else
+		{
+            // Invalid character found in the map
+            printf("Error: Found invalid character in the map at line %d\n", y + 1);
+            return false;
+        }
+    }
+    return true;
+}
+
+static int check_info(t_map_data *game)
+{
+	int y;
+	int x;
+
+	y = 0;
+	x = 0;
+	while (game->info[y])
+	{
+		if (!ft_strcmp(game->info[y], "\n"))
+		{
+			if (!ft_strncmp(game->info[y], "NO ", 3)
+			|| !ft_strncmp(game->info[y], "SO ", 3)
+			|| !ft_strncmp(game->info[y], "EA ", 3)
+			|| !ft_strncmp(game->info[y], "WE ", 3)
+			|| !ft_strncmp(game->info[y], "F ", 2)
+			|| !ft_strncmp(game->info[y], "C ", 2))
+			// || !check_map(game->info, y)) //check the line for map marks
+				return (1);
+		}
+		printf("%s", game->info[y]);
+		if (!check_map(game->info, y))
+			return (1);
+		y++;
+	}
+	return (0);
+}
+
 /* Finds and stores the assets related to walls, floor, and ceiling in
    the `game` structure. Calls `handle_error` if no valid map is found. */
 void	find_map(t_map_data	*game)
 {
 	if (find_no_map(game))
+		handle_error(EXIT_NO_MAP, game);
+	if (check_info(game))
 		handle_error(EXIT_NO_MAP, game);
 	game->n_wall_asset = find_asset(game, "NO ");
 	game->s_wall_asset = find_asset(game, "SO ");
